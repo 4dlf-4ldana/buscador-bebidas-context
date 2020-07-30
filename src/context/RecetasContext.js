@@ -1,4 +1,5 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
+import Axios from 'axios';
 
 export const RecetasContext = createContext();
 
@@ -10,9 +11,35 @@ const RecetasProvider = (props) => {
         categoria: ''
     })
 
+
+    const [consultar, guardarConsultar] = useState(false);
+
+    const { nombre, categoria } = busqueda;
+
+    useEffect(() => {
+        if (consultar) {
+            const obtenerRecetas = async () => {
+                // Por Ingrediente
+                // https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Vodka
+                // Por Categoria
+                // https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink
+                // Union de ambos
+                // https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Vodka&c=Ordinary_Drink
+                const url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${nombre}&c=${categoria}`;
+                const resultado = await Axios.get(url);
+
+                guardarRecetas(resultado.data.drinks);
+            }
+            obtenerRecetas();
+        }
+    }, [busqueda])
+
     return (
         <RecetasContext.Provider
-            value={{ buscarRecetas }}>
+            value={{
+                buscarRecetas,
+                guardarConsultar
+            }}>
             {props.children}
         </RecetasContext.Provider>
     );
