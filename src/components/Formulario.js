@@ -3,8 +3,8 @@ import { CategoriaContext } from '../context/CategoriaContext'
 
 const Formulario = () => {
 
-    const { hola } = useContext(CategoriaContext);
-    alert(hola);
+    const { categorias } = useContext(CategoriaContext);
+
     return (
         <form className="col m-12">
             <fieldset className="text-center">
