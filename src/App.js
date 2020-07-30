@@ -4,11 +4,13 @@ import Formulario from './components/Formulario';
 import CategoriaProvider from './context/CategoriaContext';
 import RecetasProvider from './context/RecetasContext';
 import ListaRecetas from './components/ListaRecetas';
+import ModalProvider from './context/ModalContext';
 
 function App() {
   return (
     <CategoriaProvider>
       <RecetasProvider>
+        <ModalProvider>
         <Header />
 
         <div className="container mt-5">
@@ -19,6 +21,7 @@ function App() {
           <ListaRecetas />
           
         </div>
+        </ModalProvider>
       </RecetasProvider>
     </CategoriaProvider>
   );
